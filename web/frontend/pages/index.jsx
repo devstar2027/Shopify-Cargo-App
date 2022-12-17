@@ -1,45 +1,43 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { Page, Grid, Button, Frame } from "@shopify/polaris"
+import {
+  Page,
+  Image,
+  Grid,
+  Frame,
+} from "@shopify/polaris";
 
-import VerificationMethod from "../components/VerificationMethod"
-import Menu from "../components/Menu"
-import SelectProducts from "../components/SelectProducts"
-import PricingAndShipping from "../components/PricingAndShipping"
-import Confirmation from "../components/Confirmation"
+import { logoImage } from "../assets";
+import Menu from "../components/Menu";
+import Settings from "../components/Settings";
+import Instructions from "../components/Instructions";
+// import Dashboard from "../components/Dashboard";
 
 export default function HomePage() {
-  const [step, setStep] = useState(1)
-
+  const [step, setStep] = useState(2)
   return (
+    
     <Frame>
       <Page>
         <Grid>
           <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+            <div style={{ padding: "0 20px", textAlign: "center" }}>
+              <Image
+                source={logoImage}
+                alt="LogoImage"
+                width={150}
+              />
+            </div>
             <Menu step={step} />
           </Grid.Cell>
 
           <Grid.Cell columnSpan={{ xs: 6, sm: 9, md: 9, lg: 9, xl: 9 }}>
-            {step === 1 && <VerificationMethod />}
-            {step === 2 && <SelectProducts />}
-            {step === 3 && <PricingAndShipping />}
-            {step === 4 && <Confirmation />}
-            {step < 4 && (
-              <div className="block--wrapper">
-                <div className="page-actions--wrapper">
-                  <div className={step === 1 ? "visually-hidden-button" : ""}>
-                    <Button onClick={() => setStep(step - 1)}>Back</Button>
-                  </div>
-
-                  <Button primary onClick={() => setStep(step + 1)}>
-                    {step < 3 ? <span>Continue</span> : <span>Submit</span>}
-                  </Button>
-                </div>
-              </div>
-            )}
+            {step === 1 && <Settings />}
+            {step === 2 && <Instructions />}
+            {/* {step === 3 && <Dashboard />} */}
           </Grid.Cell>
         </Grid>
       </Page>
     </Frame>
-  )
+  );
 }
