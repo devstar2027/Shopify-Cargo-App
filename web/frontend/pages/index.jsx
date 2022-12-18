@@ -16,7 +16,7 @@ export default function HomePage() {
       <Page>
         <Grid>
           <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
-            <div style={{ padding: "20px", textAlign: "center" }}>
+            <div style={{ padding: "20px"}}>
               <Image
                 source={logoImage}
                 alt="LogoImage"
