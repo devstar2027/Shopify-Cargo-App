@@ -90,7 +90,7 @@ export default function Dashboard() {
 	// 	}
 	// }, []);
 
-  return (
+  return (  
     <Card
       title="Dashboard"
       style={{textAlign: "center"}}
@@ -98,33 +98,37 @@ export default function Dashboard() {
       <Card.Section>
 
         <Heading>Create express shipment</Heading>
-        <Card
-          title="Dashboard"
-          style={{textAlign: "center"}}
-        >
-          <Card.Section>
-            <Heading>Order</Heading>
-            
-            <Grid>
-              <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
-                <div>Details</div>
-                <div>Name:</div>
-                <div>Address 1:</div>
-                <div>City:</div>
-                <div>Country:</div>
-                <div>Zip</div>
-                <div>Phone</div>
-                <div>Company</div>
-                <div>Delivery method:</div>
-              </Grid.Cell>
 
-              <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
-                <div>Delivery type</div>
-              </Grid.Cell>
-            </Grid>
-            <Button onClick={createShipment}>Submit</Button>
-          </Card.Section>
-        </Card>
+        <Grid>
+          <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2 }}></Grid.Cell>
+          <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
+            <Card
+              title="Order"
+              style={{textAlign: "center"}}
+              primaryFooterAction={{content: 'Create Shipment'}}
+            >
+              <Card.Section>
+                <Grid>
+                  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+                    <div>Details</div>
+                    <div>Name:</div>
+                    <div>Address 1:</div>
+                    <div>City:</div>
+                    <div>Country:</div>
+                    <div>Zip</div>
+                    <div>Phone</div>
+                    <div>Company</div>
+                    <div>Delivery method:</div>
+                  </Grid.Cell>
+
+                  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+                    <div>Delivery type</div>
+                  </Grid.Cell>
+                </Grid>
+              </Card.Section>
+            </Card>
+          </Grid.Cell>
+        </Grid>
         
       </Card.Section>
     </Card>
