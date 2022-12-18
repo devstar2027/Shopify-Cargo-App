@@ -62,7 +62,7 @@
 // }
 
 import {Frame, Navigation} from '@shopify/polaris';
-import {HomeMinor, OrdersMinor, ProductsMinor} from '@shopify/polaris-icons';
+import {SettingsMajor, QuestionMarkInverseMajor, DraftOrdersMajor} from '@shopify/polaris-icons';
 import React from 'react';
 
 export default function Menu({ currentTab }) {
@@ -74,17 +74,17 @@ export default function Menu({ currentTab }) {
             {
               url: '/',
               label: 'Settings',
-              icon: HomeMinor,
+              icon: SettingsMajor,
             },
             {
               url: '/path/to/place',
               label: 'Instructions',
-              icon: OrdersMinor,
+              icon: QuestionMarkInverseMajor,
             },
             {
               url: '/path/to/place',
               label: 'Dashboard',
-              icon: ProductsMinor,
+              icon: DraftOrdersMajor,
             },
           ]}
         />

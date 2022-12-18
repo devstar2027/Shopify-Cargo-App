@@ -1,20 +1,20 @@
 import { useState } from "react";
 
-import {
-  Page,
-  Image,
-  Grid,
-  Frame,
-} from "@shopify/polaris";
+import { Page, Image, Grid, Frame, EmptyState } from "@shopify/polaris";
+// import { Shopify } from "@shopify/shopify-api";
 
 import { logoImage } from "../assets";
 import Menu from "../components/Menu";
 import Settings from "../components/Settings";
 import Instructions from "../components/Instructions";
-// import Dashboard from "../components/Dashboard";
+import Dashboard from "../components/Dashboard";
 
 export default function HomePage() {
-  const [step, setStep] = useState(2)
+  const [step, setStep] = useState(3)
+
+	// useEffect(async () => {
+	// }, []);
+
   return (
     
     <Frame>
@@ -32,9 +32,10 @@ export default function HomePage() {
           </Grid.Cell>
 
           <Grid.Cell columnSpan={{ xs: 6, sm: 9, md: 9, lg: 9, xl: 9 }}>
+            <EmptyState></EmptyState>
             {step === 1 && <Settings />}
             {step === 2 && <Instructions />}
-            {/* {step === 3 && <Dashboard />} */}
+            {step === 3 && <Dashboard />}
           </Grid.Cell>
         </Grid>
       </Page>
