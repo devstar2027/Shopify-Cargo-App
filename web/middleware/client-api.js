@@ -82,6 +82,7 @@ export default function applyQrCodeApiEndpoints(app) {
   app.post("/api/qrcodes", async (req, res) => {
     try {
       console.log('id');
+      console.log(getShopUrlFromSession(req, res));
       const id = await ClientDB.create({
         ...(await parseQrCodeBody(req)),
 

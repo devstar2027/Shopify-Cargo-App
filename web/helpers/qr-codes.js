@@ -57,23 +57,19 @@ export async function getShopUrlFromSession(req, res) {
 
 /*
   Expect body to contain
-  title: string
-  productId: string
-  variantId: string
-  handle: string
-  discountId: string
-  discountCode: string
-  destination: string
+  expressShipments: string
+  carbox: string
+  companyName: string
+  originCity: string
+  originAddress: string
 */
 export async function parseQrCodeBody(req, res) {
   return {
-    title: req.body.title,
-    productId: req.body.productId,
-    variantId: req.body.variantId,
-    handle: req.body.handle,
-    discountId: req.body.discountId,
-    discountCode: req.body.discountCode,
-    destination: req.body.destination,
+    expressShipments: req.body.expressShipments,
+    carbox: req.body.carbox,
+    companyName: req.body.companyName,
+    originCity: req.body.originCity,
+    originAddress: req.body.originAddress,
   };
 }
 
