@@ -9,7 +9,7 @@
 import express from "express";
 
 import shopify from "../shopify.js";
-import { QRCodesDB } from "../qr-codes-db.js";
+import { ClientDB } from "../client-db.js";
 import {
   getQrCodeOr404,
   getShopUrlFromSession,
@@ -82,7 +82,7 @@ export default function applyQrCodeApiEndpoints(app) {
   app.post("/api/qrcodes", async (req, res) => {
     try {
       console.log('id');
-      const id = await QRCodesDB.create({
+      const id = await ClientDB.create({
         ...(await parseQrCodeBody(req)),
 
         /* Get the shop from the authorization header to prevent users from spoofing the data */
@@ -90,7 +90,7 @@ export default function applyQrCodeApiEndpoints(app) {
       });
       console.log(id);
       const response = await formatQrCodeResponse(req, res, [
-        await QRCodesDB.read(id),
+        await ClientDB.read(id),
       ]);
       res.status(201).send(response[0]);
     } catch (error) {
@@ -103,9 +103,9 @@ export default function applyQrCodeApiEndpoints(app) {
 
     if (qrcode) {
       try {
-        await QRCodesDB.update(req.params.id, await parseQrCodeBody(req));
+        await ClientDB.update(req.params.id, await parseQrCodeBody(req));
         const response = await formatQrCodeResponse(req, res, [
-          await QRCodesDB.read(req.params.id),
+          await ClientDB.read(req.params.id),
         ]);
         res.status(200).send(response[0]);
       } catch (error) {
@@ -116,7 +116,7 @@ export default function applyQrCodeApiEndpoints(app) {
 
   app.get("/api/qrcodes", async (req, res) => {
     try {
-      const rawCodeData = await QRCodesDB.list(
+      const rawCodeData = await ClientDB.list(
         await getShopUrlFromSession(req, res)
       );
 
@@ -141,7 +141,7 @@ export default function applyQrCodeApiEndpoints(app) {
     const qrcode = await getQrCodeOr404(req, res);
 
     if (qrcode) {
-      await QRCodesDB.delete(req.params.id);
+      await ClientDB.delete(req.params.id);
       res.status(200).send();
     }
   });

@@ -20,7 +20,7 @@ export default function Settings() {
     };
     const response = await fetch("/api/qrcodes", {
       method: "POST",
-      body: JSON.stringify(parsedBody),
+      body: parsedBody,
       headers: { "Content-Type": "application/json" },
     });
     console.log(response);

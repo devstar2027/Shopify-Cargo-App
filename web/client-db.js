@@ -9,7 +9,7 @@ import shopify from "./shopify.js";
 const DEFAULT_DB_FILE = path.join(process.cwd(), "client_db.sqlite");
 const DEFAULT_PURCHASE_QUANTITY = 1;
 
-export const QRCodesDB = {
+export const ClientDB = {
   clientTableName: "client",
   db: null,
   ready: null,

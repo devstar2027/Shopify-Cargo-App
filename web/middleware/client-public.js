@@ -4,7 +4,7 @@
 */
 import QRCode from "qrcode";
 
-import { QRCodesDB } from "../qr-codes-db.js";
+import { ClientDB } from "../client-db.js";
 import { getQrCodeOr404 } from "../helpers/qr-codes.js";
 
 export default function applyQrCodePublicEndpoints(app) {
@@ -17,7 +17,7 @@ export default function applyQrCodePublicEndpoints(app) {
     const qrcode = await getQrCodeOr404(req, res, false);
 
     if (qrcode) {
-      const destinationUrl = QRCodesDB.generateQrcodeDestinationUrl(qrcode);
+      const destinationUrl = ClientDB.generateQrcodeDestinationUrl(qrcode);
       res
         .status(200)
         .set("Content-Type", "image/png")
@@ -34,7 +34,7 @@ export default function applyQrCodePublicEndpoints(app) {
     const qrcode = await getQrCodeOr404(req, res, false);
 
     if (qrcode) {
-      res.redirect(await QRCodesDB.handleCodeScan(qrcode));
+      res.redirect(await ClientDB.handleCodeScan(qrcode));
     }
   });
 }

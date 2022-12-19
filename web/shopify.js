@@ -8,13 +8,13 @@ let { restResources } = await import(
 // import { restResources } from "@shopify/shopify-api/rest/admin/2022-10";
 
 import { join } from "path";
-import { QRCodesDB } from "./qr-codes-db.js";
+import { ClientDB } from "./client-db.js";
 
 const dbFile = join(process.cwd(), "database.sqlite");
 const sessionDb = new SQLiteSessionStorage(dbFile);
 // Initialize SQLite DB
-QRCodesDB.db = sessionDb.db;
-QRCodesDB.init();
+ClientDB.db = sessionDb.db;
+ClientDB.init();
 
 
 const DB_PATH = `${process.cwd()}/database.sqlite`;
