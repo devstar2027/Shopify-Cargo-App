@@ -8,10 +8,31 @@ export default function Settings() {
   const [companyName, setCompanyName] = useState('');
   const [originCity, setOriginCity] = useState('');
   const [originAddress, setOriginAddress] = useState('');
+
+  const handleSubmit = async () => {
+    console.log('submiting.');
+    const parsedBody = {
+      expressShipments,
+      carbox,
+      companyName,
+      originCity,
+      originAddress
+    };
+    parsedBody.destination = parsedBody.destination[0];
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(parsedBody),
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log(response);
+    // if (response.ok) {
+    // }
+  };
+
   return (
         <Card
           title="Settings"
-          primaryFooterAction={{content: 'Submit'}}
+          primaryFooterAction={{content: 'Submit', onMouseEnter: handleSubmit}}
         >
           <Card.Section>
             <TextStyle variation="strong">Please fill in the required information to complete your profile configuration.</TextStyle>
