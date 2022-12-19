@@ -18,8 +18,7 @@ export default function Settings() {
       originCity,
       originAddress
     };
-    parsedBody.destination = parsedBody.destination[0];
-    const response = await fetch(url, {
+    const response = await fetch("/api/qrcodes", {
       method: "POST",
       body: JSON.stringify(parsedBody),
       headers: { "Content-Type": "application/json" },

@@ -7,6 +7,16 @@ let { restResources } = await import(
 // If you want IntelliSense for the rest resources, you should import them directly
 // import { restResources } from "@shopify/shopify-api/rest/admin/2022-10";
 
+import { join } from "path";
+import { QRCodesDB } from "./qr-codes-db.js";
+
+const dbFile = join(process.cwd(), "database.sqlite");
+const sessionDb = new SQLiteSessionStorage(dbFile);
+// Initialize SQLite DB
+QRCodesDB.db = sessionDb.db;
+QRCodesDB.init();
+
+
 const DB_PATH = `${process.cwd()}/database.sqlite`;
 
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.
