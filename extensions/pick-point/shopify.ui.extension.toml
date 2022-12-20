@@ -2,7 +2,7 @@ type = "checkout_ui_extension"
 name = "pick-point"
 
 extension_points = [
-  'Checkout::Dynamic::Render'
+  'Checkout::ShippingMethods::RenderAfter'
 ]
 
 # [[metafields]]
