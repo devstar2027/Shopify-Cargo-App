@@ -16,40 +16,40 @@ export default function HomePage() {
       <Page>
         <Grid>
           <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
-            <div style={{ padding: "20px"}}>
-              <Image
-                source={logoImage}
-                alt="LogoImage"
-                width={150}
-              />
-            </div>
-            <Navigation location="/">
-              <Navigation.Section
-                items={[
-                  {
-                    url: '/',
-                    label: 'Settings',
-                    icon: SettingsMajor,
-                    onClick: ()=>setStep(1),
-                    selected: step === 1 && true,
-                  },
-                  {
-                    url: '/path/to/place',
-                    label: 'Instructions',
-                    icon: QuestionMarkInverseMajor,
-                    onClick: ()=>setStep(2),
-                    selected: step === 2 && true,
-                  },
-                  {
-                    url: '/path/to/place',
-                    label: 'Dashboard',
-                    icon: DraftOrdersMajor,
-                    onClick: ()=>setStep(3),
-                    selected: step === 3 && true,
-                  },
-                ]}
-              />
-            </Navigation>
+              <div style={{ padding: "20px"}}>
+                <Image
+                  source={logoImage}
+                  alt="LogoImage"
+                  width={150}
+                />
+              </div>
+              <Navigation location="/">
+                <Navigation.Section
+                  items={[
+                    {
+                      url: '/',
+                      label: 'Settings',
+                      icon: SettingsMajor,
+                      onClick: ()=>setStep(1),
+                      selected: step === 1 && true,
+                    },
+                    {
+                      url: '/path/to/place',
+                      label: 'Instructions',
+                      icon: QuestionMarkInverseMajor,
+                      onClick: ()=>setStep(2),
+                      selected: step === 2 && true,
+                    },
+                    {
+                      url: '/path/to/place',
+                      label: 'Dashboard',
+                      icon: DraftOrdersMajor,
+                      onClick: ()=>setStep(3),
+                      selected: step === 3 && true,
+                    },
+                  ]}
+                />
+              </Navigation>
           </Grid.Cell>
 
           <Grid.Cell columnSpan={{ xs: 6, sm: 9, md: 9, lg: 9, xl: 9 }}>

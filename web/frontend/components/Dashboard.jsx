@@ -8,6 +8,7 @@ import { useSearchParams  } from "react-router-dom";
 
 export default function Dashboard() {
 	const fetch = useAuthenticatedFetch();
+  const [step, setStep] = useState(1);
   const [shipmentId, setShipmentId] = useState(0);
   const [selected, setSelected] = useState('standardShipping');
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,7 +24,7 @@ export default function Dashboard() {
 	// useEffect(async () => {
   //   const response = await fetch("/api/ordersList", {
   //     method: "POST",
-  //     body: JSON.stringify({ savedSearchId: order_id }),
+  //     body: JSON.stringify({ savedSearchId: 1 }),
   //     headers: { "Content-Type": "application/json" },
   //   });
 
@@ -103,44 +104,84 @@ export default function Dashboard() {
       style={{textAlign: "center"}}
     >
       <Card.Section>
+        {step === 1 && (
+          <>
+          <Heading>Create express shipment</Heading>
+  
+          <Grid>
+            <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2 }}></Grid.Cell>
+            <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
+              <Card
+                title="Order"
+                style={{textAlign: "center"}}
+                primaryFooterAction={{content: 'Create Shipment', onMouseEnter: (createShipment)}}
+              >
+                <Card.Section>
+                  <Grid>
+                    <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+                      <div>Details</div>
+                      <div>Name:</div>
+                      <div>Address 1:</div>
+                      <div>City:</div>
+                      <div>Country:</div>
+                      <div>Zip</div>
+                      <div>Phone</div>
+                      <div>Company</div>
+                      <div>Delivery method:</div>
+                    </Grid.Cell>
+  
+                    <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+                      <Select
+                        label="Delivery type"
+                        options={options}
+                        onChange={handleSelectChange}
+                        value={selected}
+                      />
+                    </Grid.Cell>
+                  </Grid>
+                </Card.Section>
+              </Card>
+            </Grid.Cell>
+          </Grid>
+          </>
+        )}
 
-        <Heading>Create express shipment</Heading>
-
-        <Grid>
-          <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2 }}></Grid.Cell>
-          <Grid.Cell columnSpan={{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8 }}>
-            <Card
-              title="Order"
-              style={{textAlign: "center"}}
-              primaryFooterAction={{content: 'Create Shipment', onMouseEnter: (createShipment)}}
-            >
-              <Card.Section>
-                <Grid>
-                  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
-                    <div>Details</div>
-                    <div>Name:</div>
-                    <div>Address 1:</div>
-                    <div>City:</div>
-                    <div>Country:</div>
-                    <div>Zip</div>
-                    <div>Phone</div>
-                    <div>Company</div>
-                    <div>Delivery method:</div>
-                  </Grid.Cell>
-
-                  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
-                    <Select
-                      label="Delivery type"
-                      options={options}
-                      onChange={handleSelectChange}
-                      value={selected}
-                    />
-                  </Grid.Cell>
-                </Grid>
-              </Card.Section>
-            </Card>
-          </Grid.Cell>
-        </Grid>
+        {step === 2 && (
+          <>
+          <Heading>Shipment created!</Heading>
+  
+          <Grid>
+            <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+              <Card
+                title="Details"
+                primaryFooterAction={{content: 'Create Shipment', onMouseEnter: (createShipment)}}
+              >
+                <Card.Section>
+                  <Grid>
+                    <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+                      <div>Order</div>
+                      <div>#987766:</div>
+                      <div></div>
+                      <div>Tracking Number</div>
+                      <div>5467543</div>
+                    </Grid.Cell>
+                    <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+                      <div>Address</div>
+                      <div>Name:</div>
+                      <div>Address 1:</div>
+                      <div>City:</div>
+                      <div>Country:</div>
+                      <div>Zip</div>
+                      <div>Phone</div>
+                      <div>Company</div>
+                    </Grid.Cell>
+                  </Grid>
+                </Card.Section>
+              </Card>
+            </Grid.Cell>
+          </Grid>
+          </>
+        )}
         
       </Card.Section>
     </Card>

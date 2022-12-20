@@ -15,8 +15,6 @@ export default function Settings() {
     url: "/api/client",
   });
 
-  console.log(clientInfo);
-
 	useEffect(async () => {
     if (clientInfo) {
       setClientId(clientInfo.id);
@@ -36,7 +34,6 @@ export default function Settings() {
       originCity,
       originAddress
     };
-    console.log(body);
     const url = clientId ? `/api/client/${clientId}` : "/api/client";
     const method = clientId ? "PATCH" : "POST";
     const response = await fetch(url, {
@@ -53,23 +50,27 @@ export default function Settings() {
   return (
     <Card
       title="Settings"
-      primaryFooterAction={{content: 'Submit', onMouseEnter: onSubmit}}
+      primaryFooterAction={{content: 'Submit', onMouseEnter: () => {onSubmit()}}}
     >
-      <Card.Section>
-        <TextStyle variation="strong">Please fill in the required information to complete your profile configuration.</TextStyle>
-        <FormLayout>
-          <FormLayout.Group condensed>
-            <TextField label="ID number for Express shipments" value={expressShipments} onChange={(e) => setExpressShipments(e)} autoComplete="off" />
-            <TextField label="ID number for Cargobox(if exist)" value={cargobox} onChange={(e) => setCargobox(e)} autoComplete="off" />
-          </FormLayout.Group>
-          <FormLayout.Group condensed>
-            <TextField label="Company name" value={companyName} onChange={(e) => setCompanyName(e)} autoComplete="off" />
-            <TextField label="Origin City" value={originCity} onChange={(e) => setOriginCity(e)} autoComplete="off" />
-            <TextField label="Origin Address" value={originAddress} onChange={(e) => setOriginAddress(e)} autoComplete="off" />
-          </FormLayout.Group>
-          <EmptyState></EmptyState>
-        </FormLayout>
-      </Card.Section>
+      <div style={{padding: "20px"}}>
+        <Card.Section>
+          <div style={{marginBottom: "50px"}}>
+            <TextStyle variation="strong">Please fill in the required information to complete your profile configuration.</TextStyle>
+          </div>
+          <FormLayout>
+            <FormLayout.Group condensed>
+              <TextField label="ID number for Express shipments" value={expressShipments} onChange={(e) => setExpressShipments(e)} autoComplete="off" />
+              <TextField label="ID number for Cargobox(if exist)" value={cargobox} onChange={(e) => setCargobox(e)} autoComplete="off" />
+            </FormLayout.Group>
+            <FormLayout.Group condensed>
+              <TextField label="Company name" value={companyName} onChange={(e) => setCompanyName(e)} autoComplete="off" />
+              <TextField label="Origin City" value={originCity} onChange={(e) => setOriginCity(e)} autoComplete="off" />
+              <TextField label="Origin Address" value={originAddress} onChange={(e) => setOriginAddress(e)} autoComplete="off" />
+            </FormLayout.Group>
+            <EmptyState></EmptyState>
+          </FormLayout>
+        </Card.Section>
+      </div>
     </Card>
   );
 }
