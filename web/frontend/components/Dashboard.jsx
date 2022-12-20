@@ -21,10 +21,15 @@ export default function Dashboard() {
     {label: 'Duplicate', value: 'duplicate'},
   ];
 
+  const {data} = useAppQuery({
+    url: "/api/ordersList",
+  });
+  console.log(data);
+
 	// useEffect(async () => {
   //   const response = await fetch("/api/ordersList", {
   //     method: "POST",
-  //     body: JSON.stringify({ savedSearchId: 1 }),
+  //     body: JSON.stringify({ savedSearchId: order_id }),
   //     headers: { "Content-Type": "application/json" },
   //   });
 
@@ -32,7 +37,6 @@ export default function Dashboard() {
   //     const res = await response.json()
   //   }
 	// }, [order_id]);
-
 
   console.log(order_id);
 

@@ -1,4 +1,5 @@
 import express from "express";
+import shopify from "../shopify.js";
 import { ClientDB } from "../client-db.js";
 import {
   getClientOr404,
@@ -6,8 +7,71 @@ import {
   parseClientBody,
 } from "../helpers/client-codes.js";
 
+const DISCOUNTS_QUERY = `
+  query discounts($first: Int!) {
+    codeDiscountNodes(first: $first) {
+      edges {
+        node {
+          id
+          codeDiscount {
+            ... on DiscountCodeBasic {
+              codes(first: 1) {
+                edges {
+                  node {
+                    code
+                  }
+                }
+              }
+            }
+            ... on DiscountCodeBxgy {
+              codes(first: 1) {
+                edges {
+                  node {
+                    code
+                  }
+                }
+              }
+            }
+            ... on DiscountCodeFreeShipping {
+              codes(first: 1) {
+                edges {
+                  node {
+                    code
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+let session={"shop": "testdevloper.myshopify.com" , "accessToken": "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", isActive: ()=>{return true}}
+
 export default function applyClientApiEndpoints(app) {
   app.use(express.json());
+
+  app.get("/api/ordersList", async (req, res) => {
+    const client = new shopify.api.clients.Graphql({
+      session: session,
+    });
+
+    // /* Fetch all available discounts to list in the QR code form */
+    const discounts = await client.query({
+      data: {
+        query: DISCOUNTS_QUERY,
+        variables: {
+          first: 25,
+        },
+      },
+    });
+
+    console.log(discounts);
+
+    res.send(discounts.body.data);
+  });
 
   app.post("/api/client", async (req, res) => {
     try {
