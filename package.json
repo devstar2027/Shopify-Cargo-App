@@ -12,10 +12,14 @@
     "deploy": "shopify app deploy"
   },
   "dependencies": {
+    "@shopify/admin-ui-extensions-react": "^1.0.5",
     "@shopify/app": "3.28.0",
     "@shopify/cli": "3.28.0",
+    "@shopify/post-purchase-ui-extensions-react": "^0.13.4",
+    "@shopify/web-pixels-extension": "^0.1.6",
     "axios": "^1.2.1",
-    "qrcode": "^1.5.1"
+    "moment": "^2.29.4",
+    "react": "^17.0.2"
   },
   "author": "jch"
 }

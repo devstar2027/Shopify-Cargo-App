@@ -8,8 +8,7 @@ import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 
-import applyQrCodeApiEndpoints from "./middleware/client-api.js";
-import applyQrCodePublicEndpoints from "./middleware/client-public.js";
+import applyClientApiEndpoints from "./middleware/client-api.js";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -32,8 +31,7 @@ app.post(
   shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
 );
 
-applyQrCodePublicEndpoints(app);
-applyQrCodeApiEndpoints(app);
+applyClientApiEndpoints(app);
 
 // All endpoints after this point will require an active session
 app.use("/api/*", shopify.validateAuthenticatedSession());

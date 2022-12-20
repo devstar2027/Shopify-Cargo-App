@@ -17,7 +17,7 @@ export const ClientDB = {
   create: async function ({
     shopDomain,
     expressShipments,
-    carbox,
+    cargobox,
     companyName,
     originCity,
     originAddress,
@@ -26,7 +26,7 @@ export const ClientDB = {
 
     const query = `
       INSERT INTO ${this.clientTableName}
-      (shopDomain, expressShipments, carbox, companyName, originCity, originAddress, scans)
+      (shopDomain, expressShipments, cargobox, companyName, originCity, originAddress, scans)
       VALUES (?, ?, ?, ?, ?, ?, 0)
       RETURNING id;
     `;
@@ -34,7 +34,7 @@ export const ClientDB = {
     const rawResults = await this.__query(query, [
       shopDomain,
       expressShipments,
-      carbox,
+      cargobox,
       companyName,
       originCity,
       originAddress,
@@ -46,13 +46,11 @@ export const ClientDB = {
   update: async function (
     id,
     {
-      title,
-      productId,
-      variantId,
-      handle,
-      discountId,
-      discountCode,
-      destination,
+      expressShipments,
+      cargobox,
+      companyName,
+      originCity,
+      originAddress,
     }
   ) {
     await this.ready;
@@ -60,25 +58,21 @@ export const ClientDB = {
     const query = `
       UPDATE ${this.clientTableName}
       SET
-        title = ?,
-        productId = ?,
-        variantId = ?,
-        handle = ?,
-        discountId = ?,
-        discountCode = ?,
-        destination = ?
+        expressShipments = ?,
+        cargobox = ?,
+        companyName = ?,
+        originCity = ?,
+        originAddress = ?
       WHERE
         id = ?;
     `;
 
     await this.__query(query, [
-      title,
-      productId,
-      variantId,
-      handle,
-      discountId,
-      discountCode,
-      destination,
+      expressShipments,
+      cargobox,
+      companyName,
+      originCity,
+      originAddress,
       id,
     ]);
     return true;
@@ -93,7 +87,7 @@ export const ClientDB = {
 
     const results = await this.__query(query, [shopDomain]);
 
-    return results.map((qrcode) => this.__addImageUrl(qrcode));
+    return results.map((client) => this.__addImageUrl(client));
   },
 
   read: async function (id) {
@@ -119,27 +113,27 @@ export const ClientDB = {
   },
 
   /* The destination URL for a QR code is generated at query time */
-  generateQrcodeDestinationUrl: function (qrcode) {
-    return `${shopify.api.config.hostScheme}://${shopify.api.config.hostName}/qrcodes/${qrcode.id}/scan`;
+  generateQrcodeDestinationUrl: function (client) {
+    return `${shopify.api.config.hostScheme}://${shopify.api.config.hostName}/clients/${client.id}/scan`;
   },
 
   /* The behavior when a QR code is scanned */
-  handleCodeScan: async function (qrcode) {
+  handleCodeScan: async function (client) {
     /* Log the scan in the database */
-    await this.__increaseScanCount(qrcode);
+    await this.__increaseScanCount(client);
 
-    const url = new URL(qrcode.shopDomain);
-    switch (qrcode.destination) {
+    const url = new URL(client.shopDomain);
+    switch (client.destination) {
       /* The QR code redirects to the product view */
       case "product":
-        return this.__goToProductView(url, qrcode);
+        return this.__goToProductView(url, client);
 
       /* The QR code redirects to checkout */
       case "checkout":
-        return this.__goToProductCheckout(url, qrcode);
+        return this.__goToProductCheckout(url, client);
 
       default:
-        throw `Unrecognized destination "${qrcode.destination}"`;
+        throw `Unrecognized destination "${client.destination}"`;
     }
   },
 
@@ -178,7 +172,7 @@ export const ClientDB = {
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           shopDomain VARCHAR(511) NOT NULL,
           expressShipments VARCHAR(511) NOT NULL,
-          carbox VARCHAR(255) NOT NULL,
+          cargobox VARCHAR(255) NOT NULL,
           companyName VARCHAR(255) NOT NULL,
           originCity VARCHAR(255) NOT NULL,
           originAddress VARCHAR(255) NOT NULL,
@@ -205,42 +199,42 @@ export const ClientDB = {
     });
   },
 
-  __addImageUrl: function (qrcode) {
+  __addImageUrl: function (client) {
     try {
-      qrcode.imageUrl = this.__generateQrcodeImageUrl(qrcode);
+      client.imageUrl = this.__generateQrcodeImageUrl(client);
     } catch (err) {
       console.error(err);
     }
 
-    return qrcode;
+    return client;
   },
 
-  __generateQrcodeImageUrl: function (qrcode) {
-    return `${shopify.api.config.hostScheme}://${shopify.api.config.hostName}/qrcodes/${qrcode.id}/image`;
+  __generateQrcodeImageUrl: function (client) {
+    return `${shopify.api.config.hostScheme}://${shopify.api.config.hostName}/clients/${client.id}/image`;
   },
 
-  __increaseScanCount: async function (qrcode) {
+  __increaseScanCount: async function (client) {
     const query = `
       UPDATE ${this.clientTableName}
       SET scans = scans + 1
       WHERE id = ?
     `;
-    await this.__query(query, [qrcode.id]);
+    await this.__query(query, [client.id]);
   },
 
-  __goToProductView: function (url, qrcode) {
+  __goToProductView: function (url, client) {
     return productViewURL({
-      discountCode: qrcode.discountCode,
+      discountCode: client.discountCode,
       host: url.toString(),
-      productHandle: qrcode.handle,
+      productHandle: client.handle,
     });
   },
 
-  __goToProductCheckout: function (url, qrcode) {
+  __goToProductCheckout: function (url, client) {
     return productCheckoutURL({
-      discountCode: qrcode.discountCode,
+      discountCode: client.discountCode,
       host: url.toString(),
-      variantId: qrcode.variantId,
+      variantId: client.variantId,
       quantity: DEFAULT_PURCHASE_QUANTITY,
     });
   },

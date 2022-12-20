@@ -9,7 +9,7 @@ import Dashboard from "../components/Dashboard";
 import {SettingsMajor, QuestionMarkInverseMajor, DraftOrdersMajor} from '@shopify/polaris-icons';
 
 export default function HomePage() {
-  const [step, setStep] = useState(3)
+  const [step, setStep] = useState(3);
 
   return (
     <Frame>

@@ -1,13 +1,39 @@
-import {Card, TextStyle, Heading, List, Grid, EmptyState, Button} from '@shopify/polaris';
+import {Card, TextStyle, Heading, List, Grid, EmptyState, Button, Select} from '@shopify/polaris';
 import React from 'react';
 import { useAuthenticatedFetch, useAppQuery } from "../hooks";
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from "react";
+import { useSearchParams  } from "react-router-dom";
 
 export default function Dashboard() {
 	const fetch = useAuthenticatedFetch();
   const [shipmentId, setShipmentId] = useState(0);
+  const [selected, setSelected] = useState('standardShipping');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const order_id = searchParams.get('id');
+
+  const handleSelectChange = (value) => setSelected(value);
+
+  const options = [
+    {label: 'Standard Shipping', value: 'standardShipping'},
+    {label: 'Duplicate', value: 'duplicate'},
+  ];
+
+	// useEffect(async () => {
+  //   const response = await fetch("/api/ordersList", {
+  //     method: "POST",
+  //     body: JSON.stringify({ savedSearchId: order_id }),
+  //     headers: { "Content-Type": "application/json" },
+  //   });
+
+  //   if (response.ok) {
+  //     const res = await response.json()
+  //   }
+	// }, [order_id]);
+
+
+  console.log(order_id);
 
   // create shipment
   const createShipment = async () => {
@@ -71,23 +97,6 @@ export default function Dashboard() {
     });
   };
 
-  const variables = {
-    id: 5225465741603,
-	}  
-
-	// useEffect(async () => {
-	// 	const response = await fetch("/api/ordersList", {
-	// 		method: "POST",
-	// 		body: JSON.stringify({ variables }),
-	// 		headers: { "Content-Type": "application/json" },
-	// 	});
-
-	// 	if (response.ok) {
-	// 		const res = await response.json()
-	// 		const orders = res.body.data.orders
-	// 	}
-	// }, []);
-
   return (  
     <Card
       title="Dashboard"
@@ -120,7 +129,12 @@ export default function Dashboard() {
                   </Grid.Cell>
 
                   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
-                    <div>Delivery type</div>
+                    <Select
+                      label="Delivery type"
+                      options={options}
+                      onChange={handleSelectChange}
+                      value={selected}
+                    />
                   </Grid.Cell>
                 </Grid>
               </Card.Section>

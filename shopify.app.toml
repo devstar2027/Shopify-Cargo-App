@@ -1,3 +1,3 @@
-# This file stores configurations for your Shopify app.
-
-scopes = "write_products"
+name = "My new app"
+scopes = "write_customers,write_orders,write_products,read_orders"
+extension_directories = ["extensions/*"]

@@ -32,7 +32,9 @@ const QR_CODE_ADMIN_QUERY = `
   }
 `;
 
-export async function getQrCodeOr404(req, res, checkDomain = true) {
+let session={"shop": "testdevloper.myshopify.com" , "accessToken": "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", isActive: ()=>{return true}}
+
+export async function getClientOr404(req, res, checkDomain = true) {
   try {
     const response = await ClientDB.read(req.params.id);
     if (
@@ -52,7 +54,8 @@ export async function getQrCodeOr404(req, res, checkDomain = true) {
 }
 
 export async function getShopUrlFromSession(req, res) {
-  return `https://${res.locals.shopify.session.shop}`;
+  // return `https://${res.locals.shopify.session.shop}`;
+  return session.shop;
 }
 
 /*
@@ -63,10 +66,10 @@ export async function getShopUrlFromSession(req, res) {
   originCity: string
   originAddress: string
 */
-export async function parseQrCodeBody(req, res) {
+export async function parseClientBody(req, res) {
   return {
     expressShipments: req.body.expressShipments,
-    carbox: req.body.carbox,
+    cargobox: req.body.cargobox,
     companyName: req.body.companyName,
     originCity: req.body.originCity,
     originAddress: req.body.originAddress,
@@ -91,7 +94,7 @@ export async function formatQrCodeResponse(req, res, rawCodeData) {
 
   /* Instantiate a new GraphQL client to query the Shopify GraphQL Admin API */
   const client = new shopify.api.clients.Graphql({
-    session: res.locals.shopify.session,
+    session: session,
   });
 
   /* Query the Shopify GraphQL Admin API */
