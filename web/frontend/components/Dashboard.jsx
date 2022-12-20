@@ -21,7 +21,7 @@ export default function Dashboard() {
     {label: 'Duplicate', value: 'duplicate'},
   ];
 
-  if (order_id) {
+  if (order_id !== undefined) {
     const {data} = useAppQuery({
       url: "/api/ordersList",
     });
