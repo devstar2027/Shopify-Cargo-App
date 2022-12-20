@@ -58,6 +58,8 @@ export default function applyClientApiEndpoints(app) {
       session: session,
     });
 
+    console.log(session);
+
     // /* Fetch all available discounts to list in the QR code form */
     const discounts = await client.query({
       data: {
