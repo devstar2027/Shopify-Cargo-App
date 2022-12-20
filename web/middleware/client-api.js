@@ -54,10 +54,9 @@ export default function applyClientApiEndpoints(app) {
   app.use(express.json());
 
   app.get("/api/ordersList", async (req, res) => {
-    const client = new shopify.api.clients.Graphql(
-      session.shop,
-      session.accessToken
-    );
+    const client = new shopify.api.clients.Graphql({
+      session: session,
+    });
 
     // /* Fetch all available discounts to list in the QR code form */
     const discounts = await client.query({
