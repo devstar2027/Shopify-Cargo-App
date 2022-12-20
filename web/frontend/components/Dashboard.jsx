@@ -21,10 +21,12 @@ export default function Dashboard() {
     {label: 'Duplicate', value: 'duplicate'},
   ];
 
-  const {data} = useAppQuery({
-    url: "/api/ordersList",
-  });
-  console.log(data);
+  if (order_id) {
+    const {data} = useAppQuery({
+      url: "/api/ordersList",
+    });
+    console.log(data);
+  }
 
 	// useEffect(async () => {
   //   const response = await fetch("/api/ordersList", {
